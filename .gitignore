@@ -1,5 +1,19 @@
+#mac bs
 .DS_Store
+
+#Python
+__pycache__/
+*.pyc
+
+#Virtual Env
 .venv/
+
+#eggs
 *.egg-info/
+
+#beads runtimes
 .beads/bd.sock
 .beads/bd.sock:
+
+#Env
+.env

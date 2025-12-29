@@ -1,6 +1,9 @@
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse, StreamingResponse
 import httpx
+from sqlalchemy import text
+from router.db import engine
+
 
 LMSTUDIO_BASE = "http://127.0.0.1:1234"  # hardcoded for now
 
@@ -10,6 +13,12 @@ app = FastAPI(title="Router", version="0.1.0")
 @app.get("/health")
 async def health():
     return {"ok": True}
+
+@app.get("/v1/db/health")
+async def db_health():
+    async with engine.connect() as conn:
+        val = await conn.scalar(text("SELECT 1"))
+    return {"ok": True, "db": "up", "select_1": int(val)}
 
 
 async def _proxy(request: Request, path: str) -> Response:
